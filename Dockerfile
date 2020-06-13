@@ -12,7 +12,7 @@ RUN npm ci
 COPY . .
 
 # Build the project
-RUN npm run build
+#RUN npm run build
 
 # Set environment variables
 ENV POSTGRES_USERNAME=hitesh
@@ -26,15 +26,12 @@ ENV JWT_SECRET=hello
 ENV URL=http://localhost:8100
 
 # Bind the port that the image will run on
-EXPOSE 8080
+#EXPOSE 8080
 
 # Define the Docker image's behavior at runtime
 
-CMD ["node", "./www/server.js"]
-
-
-
+#CMD ["node", "./www/server.js"]
 
 # Set Port and run server
-#EXPOSE 8080
-#CMD [ "npm", "run", "prod" ]
+EXPOSE 8080
+CMD [ "npm", "run", "prod" ]
