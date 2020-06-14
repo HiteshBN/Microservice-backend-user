@@ -7,7 +7,7 @@ WORKDIR /usr/src/app
 # Install app dependencies
 COPY package*.json ./
 RUN npm ci
-
+RUN npm run build
 # Bundle app source
 ADD ./www /usr/src/app
 
