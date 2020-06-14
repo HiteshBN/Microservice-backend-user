@@ -4,15 +4,19 @@ FROM node:12
 # Create app directory
 WORKDIR /usr/src/app
 
-# Install app dependencies
+# Install app dependencies by copying
+# package.json and package-lock.json
 COPY package*.json ./
-RUN npm ci
-RUN npm run build
-# Bundle app source
-ADD ./www /usr/src/app
+
+# Install dependencies
+RUN npm install
+
+# Copy app source
+COPY . .
+
 
 # Build the project
-#RUN npm run build
+RUN npm run build
 
 # Set environment variables
 ENV POSTGRES_USERNAME=hitesh
@@ -27,11 +31,6 @@ ENV URL=http://localhost:8100
 
 # Bind the port that the image will run on
 EXPOSE 8080
+
 # Define the Docker image's behavior at runtime
-CMD ["node", "server.js"]
-
-#CMD ["node", "./www/server.js"]
-
-# Set Port and run server
-#EXPOSE 8080
-#CMD [ "npm", "run", "prod" ]
+CMD ["node", "./www/server.js"]

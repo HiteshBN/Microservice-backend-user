@@ -12,7 +12,6 @@ import {config} from 'bluebird';
 
 const router: Router = Router();
 
-let jwtSecret = 'hello'
 
 async function generatePassword(plainTextPassword: string): Promise<string> {
   const saltRounds = 10;
@@ -25,7 +24,7 @@ async function comparePasswords(plainTextPassword: string, hash: string): Promis
 }
 
 function generateJWT(user: User): string {
-  return jwt.sign(user.short(), jwtSecret);
+  return jwt.sign(user.short(), c.config.jwt.secret);
 }
 
 export function requireAuth(req: Request, res: Response, next: NextFunction) {
@@ -39,7 +38,7 @@ export function requireAuth(req: Request, res: Response, next: NextFunction) {
   }
 
   const token = tokenBearer[1];
-  return jwt.verify(token, jwtSecret, (err, decoded) => {
+  return jwt.verify(token, c.config.jwt.secret, (err, decoded) => {
     if (err) {
       return res.status(500).send({auth: false, message: 'Failed to authenticate.'});
     }
@@ -54,6 +53,8 @@ router.get('/verification',
     });
 
 router.post('/login', async (req: Request, res: Response) => {
+  console.log("A new login post request has arrived");
+  
   const email = req.body.email;
   const password = req.body.password;
 
