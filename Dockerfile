@@ -9,10 +9,10 @@ COPY package*.json ./
 RUN npm ci
 
 # Bundle app source
-COPY . .
+ADD ./www /usr/src/app
 
 # Build the project
-RUN npm run build
+#RUN npm run build
 
 # Set environment variables
 ENV POSTGRES_USERNAME=hitesh
@@ -28,7 +28,9 @@ ENV URL=http://localhost:8100
 # Bind the port that the image will run on
 EXPOSE 8080
 # Define the Docker image's behavior at runtime
-CMD ["node", "./www/server.js"]
+CMD ["node", "server.js"]
+
+#CMD ["node", "./www/server.js"]
 
 # Set Port and run server
 #EXPOSE 8080

@@ -8,7 +8,8 @@ services:
 
 # Pre-testing installs
 install:
-  - echo "nothing needs to be installed"
+  - npm i 
+  - echo "Installed"
 
 # Scripts to be run such as tests
 before_script:
